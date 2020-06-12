@@ -6,17 +6,12 @@ class EmailUser {
       from: "noreply@gmail.com",
       to: to,
       subject: subject,
-      text: text
-    }
+      text: text,
+    };
   }
 
-  async userRegistrationEmail() {
+  async sendEmail() {
     await transporter.sendMail(this.mailOptions);
   }
-
-  async userPasswordUpdated() {
-    await transporter.sendMail(this.mailOptions);
-  }
-
-};
+}
 module.exports = EmailUser;

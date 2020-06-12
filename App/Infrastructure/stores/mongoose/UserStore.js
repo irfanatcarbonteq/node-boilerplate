@@ -5,6 +5,7 @@ class MongooseUserStore {
   static buildStore() {
     return new MongooseUserStore();
   }
+
   async add(user) {
     const newUser = await User.create(user);
     return UserEntity.createFromObject(newUser);
@@ -12,6 +13,13 @@ class MongooseUserStore {
 
   async findByUserID(userID) {
     const user = await User.findOne({ userID: userID });
+    if (user) {
+      return UserEntity.createFromObject(user);
+    }
+  }
+
+  async findByPasswordResetToken(passwordResetToken) {
+    const user = await User.findOne({ passwordResetToken: passwordResetToken });
     if (user) {
       return UserEntity.createFromObject(user);
     }

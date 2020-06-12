@@ -1,5 +1,5 @@
 module.exports = {
   appName: process.env.APPNAME,
-  myPrivateKey: process.env.MYPRIVATEKEY,
-  port: process.env.PORT
+  port: process.env.PORT,
+  host: process.env.HOST,
 };

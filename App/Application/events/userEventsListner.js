@@ -1,21 +1,30 @@
 const EmailUser = require("../../Infrastructure/mailer/UserMailer");
+const { application } = require("../../Infrastructure/config");
 const { EventEmitter } = require("events");
-const userEventsListner = new EventEmitter();
+const userEventsListener = new EventEmitter();
 
-userEventsListner.on("userIsRegistered", (user) => {
+userEventsListener.on("userIsRegistered", (user) => {
   new EmailUser(
     user.email,
-    "Registration Successfull",
+    "Registration Successfully",
     "You have registered successfully"
-  ).userRegistrationEmail();
+  ).sendEmail();
 });
 
-userEventsListner.on("passwordUpdated", (user) => {
+userEventsListener.on("resetPasswordRequest", (user) => {
   new EmailUser(
     user.email,
-    "Password Updated Successfull",
-    "Password is updated successfully"
-  ).userPasswordUpdated();
+    "Reset Password",
+    `Click the following <a href="${application.host}/updatepassword?token=${user.passwordResetToken}">link</a> to update password`
+  ).sendEmail();
 });
 
-module.exports = userEventsListner;
+userEventsListener.on("passwordUpdated", (user) => {
+  new EmailUser(
+    user.email,
+    "Password Updated Successfully",
+    "Password is updated successfully"
+  ).sendEmail();
+});
+
+module.exports = userEventsListener;

@@ -14,6 +14,15 @@ class SequelizeUserStore {
     }
   }
 
+  async findByPasswordResetToken(passwordResetToken) {
+    const user = await User.findOne({
+      where: { passwordResetToken: passwordResetToken },
+    });
+    if (user) {
+      return UserEntity.createFromObject(user);
+    }
+  }
+
   async findByEmail(email) {
     return await User.findOne({ where: { email: email } });
   }

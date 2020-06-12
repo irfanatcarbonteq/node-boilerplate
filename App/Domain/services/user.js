@@ -34,9 +34,43 @@ exports.create = async (params) => {
   return { user: newUser };
 };
 
+exports.reset = async (params) => {
+  const userIsPresent = await store.findByEmail(params.email);
+  if (!userIsPresent) {
+    throw new appError("User is not registered with given email", 400);
+  }
+  const user = UserEntity.createFromObject(userIsPresent);
+  await user.setResetPasswordToken();
+  const userWithResetPasswordToken = await store.update(user);
+  userEventsListner.emit("resetPasswordRequest", userWithResetPasswordToken);
+  return { user: userWithResetPasswordToken };
+};
+
 exports.updatePassword = async (params) => {
-  const userFromDb = await store.findByUserID(params.userID);
-  const user = UserEntity.createFromObject(userFromDb);
+  const userIsPresent = await store.findByPasswordResetToken(
+    params.passwordResetToken
+  );
+
+  if (!userIsPresent) {
+    throw new appError("Invalid password reset token", 400);
+  }
+
+  if (Date.now() > userIsPresent.passwordResetExpires) {
+    throw new appError("Token Expired", 400);
+  }
+
+  if (params.password === "" || params.confirmPassword === "") {
+    throw new appError(
+      "Password and confirm password can not be blanked.",
+      400
+    );
+  }
+
+  if (params.password !== params.confirmPassword) {
+    throw new appError("Password and confirm password do not match.", 400);
+  }
+
+  const user = UserEntity.createFromObject(userIsPresent);
   await user.setPassword(params.password); //adding await due to bycrypt.
   const passwordUpdated = await store.update(user);
   if (passwordUpdated) {

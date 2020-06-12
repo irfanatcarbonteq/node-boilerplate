@@ -1,0 +1,18 @@
+extends ../views/layouts/main
+block content
+  div
+    p #{session}
+    form(action='/login',method='post')
+      input(type='hidden', name='_csrf', value='#{csrfToken}')
+      label(for='email') Email
+        input(id='email',type='text',value='#{email ? email : ""}',placeholder='Email',name='email')
+      br
+      br   
+      label(for='password') Password
+        input(id='password',type='password',value='',placeholder='Password',name='password')
+      br
+      br  
+      input(type='submit',value='Login')
+      br
+      br
+      a(href='/resetpassword') Forget password      

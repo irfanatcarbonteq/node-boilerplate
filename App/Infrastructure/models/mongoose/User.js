@@ -3,13 +3,13 @@ const UserSchema = new mongoose.Schema({
   userID: {
     type: String,
     required: [true, "can't be blank"],
-    unique: true
+    unique: true,
   },
   name: {
     type: String,
     required: [true, "can't be blank"],
     minlength: 3,
-    maxlength: 50
+    maxlength: 50,
   },
   email: {
     type: String,
@@ -19,17 +19,21 @@ const UserSchema = new mongoose.Schema({
     match: [/\S+@\S+\.\S+/, "is invalid"],
     minlength: 5,
     maxlength: 255,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
     required: [true, "can't be blank"],
     minlength: 6,
-    maxlength: 255
+    maxlength: 255,
+  },
+  passwordResetToken: {
+    type: String,
+  },
+  passwordResetExpires: {
+    type: Date,
   },
   createdAt: { type: Date, default: Date.now },
-  //give different access rights if admin or not
-  isAdmin: Boolean
 });
 
 const User = mongoose.model("User", UserSchema);

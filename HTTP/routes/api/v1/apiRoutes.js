@@ -9,6 +9,5 @@ router.post("/login", authenticate);
 router.post("/users", usersController.create);
 router.post("/password", passwordController.update);
 
-router.get("/amazon", amazonController.api);
 
 module.exports = router;

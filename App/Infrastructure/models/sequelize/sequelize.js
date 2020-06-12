@@ -1,13 +1,14 @@
+const log = require("../../logs");
 const { db } = require("../../config");
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 module.exports = () => {
   const sequelize = new Sequelize(db.host);
   sequelize
     .authenticate()
     .then(() => {
-      console.log('Connection has been established successfully.');
+      log.info("Connection has been established successfully.");
     })
-    .catch(err => {
-      console.error('Unable to connect to the database:', err);
+    .catch((err) => {
+      log.error("Unable to connect to the database:", err);
     });
-}
+};

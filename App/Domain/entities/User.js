@@ -20,6 +20,14 @@ class UserEntity {
   async setPassword(password) {
     this.password = await bcrypt.hash(password, 10);
   }
+
+  async setResetPasswordToken() {
+    this.passwordResetToken =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+    const today = new Date();
+    this.passwordResetExpires = today.setDate(today.getDate() + 1);
+  }
 }
 
 module.exports = UserEntity;

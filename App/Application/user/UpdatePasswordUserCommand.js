@@ -1,13 +1,17 @@
-const userService = require("../../Domain/services/User");
 const { Command } = require("simple-command-bus");
 class UpdatePasswordUserCommand extends Command {
-  constructor(userID, password) {
+  constructor(passwordResetToken, password, confirmPassword) {
     super();
-    this.userID = userID;
+    this.passwordResetToken = passwordResetToken;
     this.password = password;
+    this.confirmPassword = confirmPassword;
   }
-  async execute() {
-    return await userService.updatePassword(this);
+  async userDetails() {
+    return {
+      passwordResetToken: this.passwordResetToken,
+      password: this.password,
+      confirmPassword: this.confirmPassword,
+    };
   }
 }
 module.exports = UpdatePasswordUserCommand;

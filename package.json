@@ -1,7 +1,7 @@
 {
-  "name": "BoilerPlate",
+  "name": "ps-ext-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Enable amazon seller to source profitable products from other marketplacesI am learning node",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
@@ -12,12 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "amazon-mws": "0.0.27",
+    "axios": "^0.19.2",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.12",
     "common-env": "^6.3.1",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-flash-messages": "^0.1.1",
+    "express-session": "^1.17.1",
     "googleapis": "^47.0.0",
     "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
