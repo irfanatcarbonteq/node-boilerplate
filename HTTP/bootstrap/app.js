@@ -1,5 +1,4 @@
 require("dotenv").config();
-require("../../App/Infrastructure/models/dataBaseConnection")();
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -8,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const flash = require("express-flash-messages");
 const { applicationSecretKey } = require("../../App/Infrastructure/config");
+require("../../App/Infrastructure/models/dataBaseConnection");
 const apiRoutes = require("../routes/api/v1/apiRoutes");
 const applicationRoutes = require("../routes/applicationRoutes");
 app.set("views", path.join(__dirname, "../views"));
@@ -30,3 +30,4 @@ app.use(flash());
 app.use("/api/v1/", apiRoutes);
 app.use(applicationRoutes);
 module.exports = app;
+
