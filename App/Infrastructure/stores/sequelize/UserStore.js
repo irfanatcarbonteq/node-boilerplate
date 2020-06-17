@@ -26,5 +26,18 @@ class SequelizeUserStore {
   async findByEmail(email) {
     return await User.findOne({ where: { email: email } });
   }
+
+  async update(user) {
+    return await User.update(user, { where: { userID: user.userID } });
+  }
+
+  async userIsPresent(userID) {
+    const user = await User.findOne({ where: { userID: userID } });
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 module.exports = SequelizeUserStore;

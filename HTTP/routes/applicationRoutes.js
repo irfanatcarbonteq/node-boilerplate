@@ -4,6 +4,7 @@ const csrf = require("csurf");
 const csrfProtection = csrf({ cookie: true });
 const bodyParser = require("body-parser");
 const parseForm = bodyParser.urlencoded({ extended: false });
+const { application } = require("../../App/Infrastructure/config");
 const usersController = require("../controllers/users");
 const passwordController = require("../controllers/password");
 const authenticateWebUser = require("../middleware/authenticateWebUser");
@@ -12,6 +13,7 @@ const alreadyLoggedIn = require("../middleware/alreadyLoggedIn");
 
 applicationRouter.use("*", (req, res, next) => {
   res.locals.isLoggedIn = req.session.userID !== undefined;
+  res.locals.applicationName = application.applicationName;
   next();
 });
 
