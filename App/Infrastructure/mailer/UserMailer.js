@@ -1,17 +1,30 @@
-const transporter = require("./transporter");
+const path = require("path");
+const Email = require("email-templates");
 
 class EmailUser {
-  constructor(to, subject, text) {
-    this.mailOptions = {
-      from: "noreply@gmail.com",
-      to: to,
-      subject: subject,
-      text: text,
-    };
+  constructor(options, locals) {
+    this.options = options;
+    this.locals = locals;
   }
 
   async sendEmail() {
-    await transporter.sendMail(this.mailOptions);
+    const email = new Email({
+      message: {
+        from: "noreply@gmail.com",
+      },
+      // uncomment below to send emails in development/test env:
+      //send: true,
+      transport: {
+        jsonTransport: true,
+      },
+    });
+    email.send({
+      template: path.join(__dirname, this.options.path),
+      message: {
+        to: this.options.to,
+      },
+      locals: this.locals,
+    });
   }
 }
 module.exports = EmailUser;

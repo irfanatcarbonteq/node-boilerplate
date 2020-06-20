@@ -5,26 +5,22 @@ const userEventsListener = new EventEmitter();
 
 userEventsListener.on("userIsRegistered", (user) => {
   new EmailUser(
-    user.email,
-    "Registration Successfully",
-    "You have registered successfully"
+    { to: user.email, path: "registration" },
+    { name: user.name }
   ).sendEmail();
 });
 
 userEventsListener.on("resetPasswordRequest", (user) => {
   new EmailUser(
-    user.email,
-    "Reset Password",
-    `Click the following <a href="${application.host}/updatepassword?token=${user.passwordResetToken}">link</a> to update password`
+    { to: user.email, path: "resetpassword" },
+    {
+      resetPasswordLink: `${application.hostingUrl}/updatepassword?token=${user.passwordResetToken}`,
+    }
   ).sendEmail();
 });
 
 userEventsListener.on("passwordUpdated", (user) => {
-  new EmailUser(
-    user.email,
-    "Password Updated Successfully",
-    "Password is updated successfully"
-  ).sendEmail();
+  new EmailUser({ to: user.email, path: "updatepassword" }, {}).sendEmail();
 });
 
 module.exports = userEventsListener;

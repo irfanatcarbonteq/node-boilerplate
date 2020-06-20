@@ -11,7 +11,7 @@ require("../../App/Infrastructure/models/dataBaseConnection");
 const apiRoutes = require("../routes/api/v1/apiRoutes");
 const applicationRoutes = require("../routes/applicationRoutes");
 app.set("views", path.join(__dirname, "../views"));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 const store = require("../session")(session);
@@ -30,4 +30,3 @@ app.use(flash());
 app.use("/api/v1/", apiRoutes);
 app.use(applicationRoutes);
 module.exports = app;
-

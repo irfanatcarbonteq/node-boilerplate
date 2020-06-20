@@ -3,13 +3,13 @@ block content
   div
     p #{session}
     form(action='/signup',method='post')
-      input(type='hidden', name='_csrf', value='#{csrfToken}')
+      input(type='hidden', name='_csrf', value=csrfToken)
       label(for='name') Name
-        input(id='name',type='text',value='#{name ? name : ""}',placeholder='Name',name='name')
+        input(id='name',type='text',value=name ? name : "",placeholder='Name',name='name')
       br  
       br
       label(for='email') Email
-        input(id='email',type='text',value='#{email ? email : ""}',placeholder='Email',name='email')
+        input(id='email',type='text',value=email ? email : "",placeholder='Email',name='email')
       br
       br   
       label(for='password') Password
