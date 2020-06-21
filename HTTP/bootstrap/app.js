@@ -10,6 +10,7 @@ const { applicationSecretKey } = require("../../App/Infrastructure/config");
 require("../../App/Infrastructure/models/dataBaseConnection");
 const apiRoutes = require("../routes/api/v1/apiRoutes");
 const applicationRoutes = require("../routes/applicationRoutes");
+const log = require("../../App/Infrastructure/logs");
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,15 +19,17 @@ const store = require("../session")(session);
 app.use(
   session({
     secret: applicationSecretKey,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-    },
     store: store,
     resave: true,
     saveUninitialized: true,
   })
 );
 app.use(flash());
+app.use((req, res, next) => {
+  log.info(`${req.method} ${req.url}`);
+  next();
+});
 app.use("/api/v1/", apiRoutes);
 app.use(applicationRoutes);
+
 module.exports = app;
