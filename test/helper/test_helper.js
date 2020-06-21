@@ -11,6 +11,9 @@ before(() => {
   sinon
     .stub(userEventsListner._events, "resetPasswordRequest")
     .returns("Email Sent Successfully.");
+  sinon
+    .stub(userEventsListner._events, "passwordUpdated")
+    .returns("Password Updated Successfully.");
 });
 
 beforeEach((done) => {
