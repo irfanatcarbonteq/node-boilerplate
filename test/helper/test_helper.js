@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const sinon = require("sinon");
 const userEventsListner = require("../../App/Application/events/userEventsListner");
 const { db } = require("../../App/Infrastructure/config");
-mongoose.connect(db.host);
+mongoose.connect(db.test_host);
 
 before(() => {
   sinon
