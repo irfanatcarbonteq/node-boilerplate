@@ -1,3 +1,4 @@
+const transport = require("./transport");
 const path = require("path");
 const Email = require("email-templates");
 
@@ -13,11 +14,10 @@ class EmailUser {
         from: "noreply@gmail.com",
       },
       // uncomment below to send emails in development/test env:
-      //send: true,
-      transport: {
-        jsonTransport: true,
-      },
+      send: true,
+      transport,
     });
+
     email.send({
       template: path.join(__dirname, this.options.path),
       message: {
