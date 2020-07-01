@@ -28,7 +28,10 @@ class SequelizeUserStore {
   }
 
   async update(user) {
-    return await User.update(user, { where: { userID: user.userID } });
+    await User.update(user, {
+      where: { userID: user.userID },
+    });
+    return await User.findOne({ where: { userID: user.userID } });
   }
 
   async userIsPresent(userID) {
